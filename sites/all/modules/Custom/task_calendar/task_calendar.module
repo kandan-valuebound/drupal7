@@ -1,5 +1,4 @@
 <?php
-//require_once ('task_calendar.theme.inc');
 
 /**
 * Its a hook, it need to have module name suffixed with _menu.
