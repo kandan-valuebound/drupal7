@@ -1,0 +1,44 @@
+<?php
+//require_once ('task_calendar.theme.inc');
+
+/**
+* Its a hook, it need to have module name suffixed with _menu.
+*/
+function task_calendar_menu(){
+    $items = array();
+    $items['task_list'] = array(
+              'title' => 'Task Calendar',
+              'description' => 'Displays all the task Calendar List',
+              'page callback' => 'get_task_list',
+              'access callback' => true
+          );
+    return $items;
+}
+
+function get_task_list(){
+    $query = db_select('daily_task', 'dt')
+               ->fields('dt', array('daily_task_id', 'task_description', 'status', 'created_at', 'task_date'))
+               ->condition('dt.status', 1);
+    $result = $query->execute();
+
+    $sl_no = 1;
+    $record = array();
+    foreach ($result as $row) {
+      $record[] = array($sl_no++, $row->task_description, $row->task_date, $row->status, $row->created_at);
+    }
+
+    $header = array('SL.No', 'Task Description', 'Task Date', 'Status', 'Created At');
+    return theme('table', array('header' => $header, 'rows' => $record));
+
+    //$output = theme('task_list', array('data' => $result));
+    //return $output;
+}
+
+// function call_hello_world(){
+//     $vars = array();
+//     $vars['type'] = "text";
+//     $vars['title'] = "";
+//     $vars['attributes'] = array();
+//     $vars['items'][0] = "Its working";
+//     return theme_item_list($vars);
+// }

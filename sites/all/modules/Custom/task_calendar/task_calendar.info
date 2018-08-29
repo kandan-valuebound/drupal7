@@ -1,0 +1,3 @@
+name = Task Calendar
+description = "Module for describing the task calendar"
+core = 7.x
